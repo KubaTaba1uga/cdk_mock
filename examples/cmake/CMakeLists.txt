@@ -18,7 +18,10 @@ include("${c_minilib_mock_SOURCE_DIR}/cmake/setup.cmake")
 
 # Your test target, but remember to always put test files first, otherwise
 #  linker will pick orginal function instead of wrapped one.
-add_executable(mytest test_main.c main.c)
+# Remember to split mocked functions from main. If you put mocked function
+#  in the same compilation unit, than linker cannot do anything, and wrapping
+#  doesn't work.
+add_executable(mytest test_main.c main.c lib.c)
 
 # Define the mocked test
 add_mocked_test(
