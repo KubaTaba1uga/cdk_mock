@@ -8,8 +8,6 @@ int real_add(int a, int b) { return a + b; }
 
 MOCKABLE(int add(int a, int b)) { return real_add(a, b); }
 
-#define add_cp add
-
 int _main(void) {
   int result = add(1, 2);
 
