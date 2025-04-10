@@ -8,4 +8,5 @@ target_include_directories(c_minilib_mock INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/
 # === Expose add_mocked_test() ===
 # Make function available to parent projects that FetchContent this one
 set(_mock_module_path "${CMAKE_CURRENT_LIST_DIR}/cmake")
-set_property(GLOBAL APPEND PROPERTY CMAKE_MODULE_PATH "${_mock_module_path}")
+set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${CMAKE_CURRENT_LIST_DIR}/cmake")
+
