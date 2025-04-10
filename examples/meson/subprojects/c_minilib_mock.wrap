@@ -1,0 +1,4 @@
+[wrap-git]
+directory = c_minilib_mock
+url = https://github.com/KubaTaba1uga/c_minilib_mock
+revision = master

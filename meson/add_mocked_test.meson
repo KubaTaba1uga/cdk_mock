@@ -1,0 +1,12 @@
+add_mocked_test = function(name, exe, args, kwargs)
+  mocked_funcs = kwargs.get('mocked_tests', [])
+  wrap_flags = []
+
+  foreach f : mocked_funcs
+    wrap_flags += ['-Wl,--wrap=' + f]
+  endforeach
+
+  exe.link_args(wrap_flags)
+  exe.add_compile_args('-O0', '-fno-inline')
+  test(name, exe, args)
+end
