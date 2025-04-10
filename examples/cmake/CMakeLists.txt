@@ -14,8 +14,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(c_minilib_mock)
 
-# Include the mocking CMake function from the fetched project
-include(add_mocked_test)
+include("${c_minilib_mock_SOURCE_DIR}/cmake/setup.cmake")
 
 # Your test target
 add_executable(mytest src/main.c test/test_main.c)
