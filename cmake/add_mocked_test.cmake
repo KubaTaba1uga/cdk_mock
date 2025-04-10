@@ -44,4 +44,6 @@ function(add_mocked_test)
         endforeach()
         target_link_options(${MOCK_ARGS_NAME} PRIVATE ${WRAP_FLAGS})
     endif()
+
+   target_compile_options(${MOCK_ARGS_NAME} PRIVATE -O0 -fno-inline)
 endfunction()

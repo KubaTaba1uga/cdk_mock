@@ -16,8 +16,9 @@ FetchContent_MakeAvailable(c_minilib_mock)
 
 include("${c_minilib_mock_SOURCE_DIR}/cmake/setup.cmake")
 
-# Your test target
-add_executable(mytest src/main.c test/test_main.c)
+# Your test target, but remember to always put test files first, otherwise
+#  linker will pick orginal function instead of wrapped one.
+add_executable(mytest test_main.c main.c)
 
 # Define the mocked test
 add_mocked_test(
