@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" version="26.2.9">
   <diagram id="jrMk6QQQgedWax6qJVoh" name="Page-1">
-    <mxGraphModel dx="1948" dy="1767" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1948" dy="2730" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -55,7 +55,7 @@
           <mxGeometry x="860" y="310" width="210" height="360" as="geometry" />
         </mxCell>
         <mxCell id="VTxr0MBzQ0uazpq9PHjl-18" value="Yes" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="800" y="360" width="60" height="30" as="geometry" />
+          <mxGeometry x="790" y="385" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="VTxr0MBzQ0uazpq9PHjl-19" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="VTxr0MBzQ0uazpq9PHjl-20" target="VTxr0MBzQ0uazpq9PHjl-21">
           <mxGeometry relative="1" as="geometry">
@@ -78,10 +78,10 @@
           <mxGeometry x="910" y="540" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="VTxr0MBzQ0uazpq9PHjl-23" value="No" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="750" y="460" width="60" height="30" as="geometry" />
+          <mxGeometry x="740" y="450" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="VTxr0MBzQ0uazpq9PHjl-24" value="Yes" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="800" y="540" width="60" height="30" as="geometry" />
+          <mxGeometry x="790" y="540" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="VTxr0MBzQ0uazpq9PHjl-25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1">
           <mxGeometry relative="1" as="geometry">
@@ -90,7 +90,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="VTxr0MBzQ0uazpq9PHjl-27" value="No" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="750" y="615" width="60" height="30" as="geometry" />
+          <mxGeometry x="740" y="610" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="VTxr0MBzQ0uazpq9PHjl-31" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="VTxr0MBzQ0uazpq9PHjl-28" target="VTxr0MBzQ0uazpq9PHjl-29">
           <mxGeometry relative="1" as="geometry">
@@ -117,17 +117,17 @@
             <mxPoint x="325" y="460" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="VTxr0MBzQ0uazpq9PHjl-33" value="Do you using&amp;nbsp;&lt;div&gt;building system&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;?&lt;/span&gt;&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="VTxr0MBzQ0uazpq9PHjl-33" value="Is&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;mocked&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;function&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;within the same compilation&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;unit&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;?&lt;/span&gt;&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="457.5" y="355" width="125" height="120" as="geometry" />
         </mxCell>
         <mxCell id="VTxr0MBzQ0uazpq9PHjl-35" value="No" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="520" y="280" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="VTxr0MBzQ0uazpq9PHjl-37" value="Yes" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="557.5" y="385" width="60" height="30" as="geometry" />
+          <mxGeometry x="415" y="390" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="VTxr0MBzQ0uazpq9PHjl-42" value="No" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="410" y="385" width="60" height="30" as="geometry" />
+          <mxGeometry x="570" y="390" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="VTxr0MBzQ0uazpq9PHjl-45" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="VTxr0MBzQ0uazpq9PHjl-43" target="VTxr0MBzQ0uazpq9PHjl-29">
           <mxGeometry relative="1" as="geometry">
@@ -137,11 +137,11 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="VTxr0MBzQ0uazpq9PHjl-43" value="Use C&lt;br&gt;MOCKABLE&lt;br&gt;macro" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="260" y="460" width="120" height="60" as="geometry" />
-        </mxCell>
         <mxCell id="VTxr0MBzQ0uazpq9PHjl-46" value="weak method" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="230" y="355" width="180" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="VTxr0MBzQ0uazpq9PHjl-43" value="Use C&lt;br&gt;MOCKABLE&lt;br&gt;macro" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="VTxr0MBzQ0uazpq9PHjl-46">
+          <mxGeometry x="30" y="135" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="VTxr0MBzQ0uazpq9PHjl-47" value="Is mocked&amp;nbsp;&lt;div&gt;function from&lt;/div&gt;&lt;div&gt;&amp;nbsp;external library?&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="457.5" y="180" width="125" height="120" as="geometry" />
