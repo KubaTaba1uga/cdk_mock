@@ -12,51 +12,12 @@
 
 ## 🧠 Example Usage
 
-```c
-// app.c
-#include <c_minilib_mock.h>
-#include <stdio.h>
+Check the usage examples in the respective subdirectories of `examples/`:
+- CMake Examples: `examples/cmake/`
+- Meson Examples: `examples/meson/`
+- Mockable Macro Examples: `examples/mockable_macro/`
 
-MOCKABLE(int foo(void)) { return 42; }
-
-#ifdef ENABLE_MOCKS
-int _main(void) {
-#else
-int main(void) {
-#endif
-    printf("foo: %d\n", foo());
-    return 0;
-}
-```
-
-```c
-// test_app.c
-int foo(void) { return 999; }
-int _main(void);
-int main(void) { _main(); }
-```
-
-## ⚙️ Build Instructions
-
-### CMake
-
-```sh
-./examples/cmake/compile.sh
-```
-
-### Meson
-
-```sh
-./examples/meson/compile.sh
-```
-
-## ✅ Run All Examples
-
-```sh
-python3 examples/run.py
-```
-
-Each example is compiled and executed. Output indicates if compilation or test execution failed.
+Each example demonstrates how to use the provided macros and integration scripts.
 
 ## 🧰 Development Tools
 
