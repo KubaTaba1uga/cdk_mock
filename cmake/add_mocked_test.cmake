@@ -16,6 +16,8 @@
 include_guard(GLOBAL)
 
 function(add_mocked_test)
+    message(STATUS "=== add_mocked_test loaded ===")
+
     set(one_value_keywords NAME)
     set(multi_value_keywords MOCKED_TESTS)
 
