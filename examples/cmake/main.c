@@ -1,7 +1,6 @@
 #include <stdio.h>
 
 #include "lib.h"
-#include "main.h"
 
 #include <c_minilib_mock.h>
 
