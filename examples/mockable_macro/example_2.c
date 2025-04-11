@@ -1,4 +1,4 @@
-#include "../../include/c_minilib_mock.h"
+#include <c_minilib_mock.h>
 
 #include <stdio.h>
 
