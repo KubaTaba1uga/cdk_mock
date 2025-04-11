@@ -14,18 +14,21 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(c_minilib_mock)
 
-include("${c_minilib_mock_SOURCE_DIR}/cmake/setup.cmake")
+add_executable(example_1 main.c lib.c)
+target_link_libraries(example_1 PRIVATE c_minilib_mock)
 
 # Your test target, but remember to always put test files first, otherwise
 #  linker will pick orginal function instead of wrapped one.
 # Remember to split mocked functions from main. If you put mocked function
 #  in the same compilation unit, than linker cannot do anything, and wrapping
 #  doesn't work.
-add_executable(mytest test_main.c main.c lib.c)
+add_executable(example_1_test test_main.c main.c lib.c)
+target_link_libraries(example_1_test PRIVATE c_minilib_mock)
 
-# Define the mocked test
+# Include is required if you want to use `add_mocked_test` function.
+include("${c_minilib_mock_SOURCE_DIR}/cmake/setup.cmake")
 add_mocked_test(
-    NAME mytest
-    COMMAND mytest
+    NAME example_1_test
+    COMMAND example_1_test
     MOCKED_TESTS foo
 )

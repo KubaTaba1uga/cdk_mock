@@ -57,5 +57,5 @@ function(add_mocked_test)
     
     target_include_directories(${MOCK_ARGS_NAME} PRIVATE ${MOCK_INCLUDE_DIR})
 
-    target_compile_options(${MOCK_ARGS_NAME} PRIVATE -O0 -fno-inline)
+    target_compile_options(${MOCK_ARGS_NAME} PRIVATE -O0 -fno-inline -DENABLE_MOCKS)
 endfunction()
