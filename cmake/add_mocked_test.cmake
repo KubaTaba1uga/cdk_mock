@@ -47,10 +47,15 @@ function(add_mocked_test)
         target_link_options(${MOCK_ARGS_NAME} PRIVATE ${WRAP_FLAGS})
     endif()
     
-    get_filename_component(MOCK_IMPL_ROOT "${CMAKE_CURRENT_LIST_DIR}" ABSOLUTE)
-    message(STATUS "Using include path: ${MOCK_IMPL_ROOT}/include")
+    if(NOT DEFINED C_MINILIB_MOCK_SOURCE_DIR)
+      message(FATAL_ERROR "C_MINILIB_MOCK_SOURCE_DIR not set. Ensure c_minilib_mock was properly included.")
+    endif()
+
+    set(MOCK_INCLUDE_DIR "${C_MINILIB_MOCK_SOURCE_DIR}/include")
+
+    message(STATUS "Using include path: ${MOCK_INCLUDE_DIR}")
     
-    target_include_directories(${MOCK_ARGS_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+    target_include_directories(${MOCK_ARGS_NAME} PRIVATE ${MOCK_INCLUDE_DIR})
 
     target_compile_options(${MOCK_ARGS_NAME} PRIVATE -O0 -fno-inline -DDEBUG)
 endfunction()
