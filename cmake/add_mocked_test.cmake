@@ -45,6 +45,9 @@ function(add_mocked_test)
         target_link_options(${MOCK_ARGS_NAME} PRIVATE ${WRAP_FLAGS})
     endif()
     
+    get_filename_component(MOCK_IMPL_ROOT "${CMAKE_CURRENT_LIST_DIR}" ABSOLUTE)
+    message(STATUS "Using include path: ${MOCK_IMPL_ROOT}/include")
+    
     target_include_directories(${MOCK_ARGS_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
     target_compile_options(${MOCK_ARGS_NAME} PRIVATE -O0 -fno-inline -DDEBUG)
