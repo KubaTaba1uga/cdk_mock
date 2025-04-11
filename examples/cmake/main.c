@@ -3,6 +3,8 @@
 #include "lib.h"
 #include "main.h"
 
+#include <c_minilib_mock.h>
+
 MOCKABLE(int bar(void)) { return 89; }
 MOCKABLE_DUPLICATE(bar);
 
