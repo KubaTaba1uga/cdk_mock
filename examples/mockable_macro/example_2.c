@@ -2,13 +2,14 @@
 
 #include <stdio.h>
 
-// If you need orginaly functionality you need to split function into
-//  orginal one and mocked one.
-int real_add(int a, int b) { return a + b; }
+MOCKABLE(int add(int a, int b)) { return a + b; }
+MOCKABLE_DUPLICATE(add);
 
-MOCKABLE(int add(int a, int b)) { return real_add(a, b); }
-
+#ifdef DEBUG
 int _main(void) {
+#else
+int main(void) {
+#endif
   int result = add(1, 2);
 
   printf("Addition result is: %d\n", result);

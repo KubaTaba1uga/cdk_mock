@@ -2,8 +2,7 @@
 #define C_MINILIB_MOCK_H
 
 #ifdef DEBUG
-#define MOCKABLE(...)                                                          \
-  __attribute__((noinline)) __attribute__((weak)) __VA_ARGS__
+#define MOCKABLE(...) __attribute__((noinline, weak)) __VA_ARGS__
 #else
 #define MOCKABLE(...) __VA_ARGS__
 #endif
@@ -14,6 +13,16 @@
 #define MOCKABLE_STATIC(...) MOCKABLE(__VA_ARGS__)
 #else
 #define MOCKABLE_STATIC(...) static __VA_ARGS__
+#endif
+
+/* This macro is usefull if you need orginal function in tests.
+ */
+#ifdef DEBUG
+#define MOCKABLE_DUPLICATE(function_name)                                      \
+  __typeof__(function_name) function_name##_orig                               \
+      __attribute__((weak, alias(#function_name)))
+#else
+#define MOCKABLE_DUPLICATE(function_name)
 #endif
 
 #endif // C_MINILIB_MOCK_H

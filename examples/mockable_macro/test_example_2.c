@@ -1,14 +1,13 @@
-#include "example_2.h"
-
 #include "stdio.h"
 
 // We need to declare somwhere orginal function. Declaring it in
 //  test makes src code cleaner.
-int real_add(int a, int b);
+int add_orig(int a, int b);
+int _main(void);
 
 int add(int a, int b) {
   puts("Mock called");
-  return real_add(a, b);
+  return add_orig(a, b);
 }
 
 void test_main() { _main(); }
