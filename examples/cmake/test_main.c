@@ -1,9 +1,8 @@
 #include <stdio.h>
 
-#include "main.h"
-
 // mock implementation
 int __wrap_foo(void) { return 999; }
+int _main(void);
 
 void test_main() { _main(); }
 
