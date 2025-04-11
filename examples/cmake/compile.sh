@@ -13,4 +13,4 @@ cd "$BUILD_DIR"
 cmake ..
 
 # Build
-cmake --build .
+cmake --build . --verbose
