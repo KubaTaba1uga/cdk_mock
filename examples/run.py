@@ -54,10 +54,10 @@ def main():
         script_dir = script.parent.resolve()
         build_dir = script_dir / "build"
 
-        if not build_dir.exists():
-            build_dir = script_dir
-
         if run_script(script):
+            if not build_dir.exists():
+                build_dir = script_dir
+
             if not test_binaries(build_dir):
                 overall_pass = False
         else:
