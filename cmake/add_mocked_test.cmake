@@ -53,8 +53,6 @@ function(add_mocked_test)
 
     set(MOCK_INCLUDE_DIR "${C_MINILIB_MOCK_SOURCE_DIR}/include")
 
-    message(STATUS "Using include path: ${MOCK_INCLUDE_DIR}")
-    
     target_include_directories(${MOCK_ARGS_NAME} PRIVATE ${MOCK_INCLUDE_DIR})
 
     target_compile_options(${MOCK_ARGS_NAME} PRIVATE -O0 -fno-inline -DENABLE_MOCKS)

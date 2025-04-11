@@ -18,3 +18,6 @@ test = executable('test_example_1', ['main.c', 'test_main.c', 'lib.c'],
   c_args: ['-DENABLE_MOCKS'],  
   link_args: run_command(mock_flags_gen_script, ['foo']).stdout().strip().split(' ')
 )
+
+test('test_example_1', test)
+
