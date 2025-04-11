@@ -9,7 +9,7 @@ for src in "${sources[@]}"; do
   base="$(basename "$src" .c)"  # e.g., "example_1"
 
   # Debug build
-  gcc -DDEBUG "$src" "test_${src}" -o "test_${base}"
+  gcc -DENABLE_MOCKS "$src" "test_${src}" -o "test_${base}"
 
   # Normal build
   gcc "$src" -o "$base"

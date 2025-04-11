@@ -7,7 +7,7 @@
 MOCKABLE(int bar(void)) { return 888; }
 MOCKABLE_DUPLICATE(bar);
 
-#ifdef DEBUG
+#ifdef ENABLE_MOCKS
 int _main(void) {
 #else
 int main(void) {

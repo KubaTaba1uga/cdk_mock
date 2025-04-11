@@ -5,7 +5,7 @@
 MOCKABLE(int add(int a, int b)) { return a + b; }
 MOCKABLE_DUPLICATE(add);
 
-#ifdef DEBUG
+#ifdef ENABLE_MOCKS
 int _main(void) {
 #else
 int main(void) {
