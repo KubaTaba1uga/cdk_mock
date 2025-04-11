@@ -54,10 +54,7 @@ def main():
         script_dir = script.parent.resolve()
         build_dir = script_dir / "build"
 
-        if build_dir.exists():
-            print(f"🧹 Cleaning: {build_dir}")
-            subprocess.run(["rm", "-rf", str(build_dir)])
-        else:
+        if not build_dir.exists():
             build_dir = script_dir
 
         if run_script(script):
