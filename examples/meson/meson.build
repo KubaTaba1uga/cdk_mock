@@ -14,7 +14,7 @@ exe = executable('example_1', ['main.c', 'lib.c'],
   include_directories: include_directories('../../include'),  
 )
 
-test_1 = executable('test_example_1', ['test_lib.c', 'lib.c'],
+test_1 = executable('test_example_1', ['test_main.c', 'lib.c'],
   dependencies: [c_minilib_mock_dep],
   include_directories: include_directories('../../include'),
   c_args: ['-DENABLE_MOCKS'],  
@@ -34,6 +34,9 @@ test_2 = executable('test_example_2', ['test_lib.c'],
   c_args: ['-DENABLE_MOCKS'],
   link_with: mocked_lib,
   link_args: [
-              run_command(mock_flags_gen_script, ['foo'], check: true).stdout().strip().split(' ')
+              run_command(mock_flags_gen_script, ['foo'], check: true).stdout().strip().split(' '),
+              run_command(mock_flags_gen_script, ['bar'], check: true).stdout().strip().split(' ')	      
 	      ]
 )
+
+test('test_example_2', test_2)
