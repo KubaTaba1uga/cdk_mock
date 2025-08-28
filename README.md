@@ -56,6 +56,39 @@ gcc -DCDK_MOCK_ENABLE main.c -o demo_test
 # add(2,3) = 105
 ```
 
+### Example: Mocking functions without macro
+
+CDK Mock can also use the linker’s `--wrap` feature to mock functions **without any macros**.
+This works with **CMake**, **Meson**, and plain GCC builds.
+
+See the [`examples/cmake/`](examples/cmake), [`examples/meson/`](examples/meson), and [`examples/gcc/`](examples/gcc) directories.
+
+To build and run:
+```sh
+cd examples/cmake
+./compile.sh
+./build/example_1       # run original
+./build/example_1_test  # run with mocks
+```
+
+Mocks are written in separate `.c` files using the special `__wrap_<fn>` / `__real_<fn>` pattern:
+```c
+// mock_lib.c
+#include <stdio.h>
+
+int __real_bar(void);              // original implementation
+int __wrap_foo(void) { return 999; }  // replace calls to foo()
+
+int bar(void) {
+    puts("Mocked bar called");
+    return __real_bar();           // delegate to original
+}
+```
+
+This way you can **intercept any function at link time** without touching its original source.
+
+### More examples
+
 Full working examples are in the `examples/` directory, with **CMake**, **Meson**, and plain compiler builds.
 
 ---
