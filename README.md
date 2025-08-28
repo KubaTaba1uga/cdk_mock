@@ -2,16 +2,17 @@
 
 ## Introduction
 
+The **C Development Kit (CDK)** is a collection of lightweight, MIT-licensed libraries to make C development on Linux simpler and more consistent.
 
-**C Development Kit (CDK)** is a set of lightweight, MIT-licensed libraries that make C development on Linux simpler and more consistent. Each package focuses on a specific problem area.
+**CDK: Mock** is the mocking component. It provides a minimal, portable way to **mock any function in your C project**, so you can write meaningful tests without rewriting or overcomplicating code. Works with both **GCC** and **Clang**.
 
-**C Development Kit (CDK): Mock** provides a simple and flexible way to **mock any function in your C project**, making it easier to write unit tests without rewriting or overcomplicating code. It’s designed to be minimal, portable, and integrate smoothly with GCC and CLANG.
+---
 
-## How to use?
+## Quick Start
 
-Usage example is in `examples` directory, at least one example is prepared for each cmake, meson and compiler only.
-Here is simple example showing how to use on of mockable macros:
-```
+### Example: Marking a function as mockable
+
+```c
 #include <stdio.h>
 #include "cdk_mock.h"
 
@@ -20,128 +21,93 @@ CDKM_MOCKABLE(int add(int a, int b)) {
     return a + b;   // default implementation
 }
 
-/* Expose original symbol so mock can call it if needed */
+/* Expose original symbol for mocks to call */
 CDKM_MOCKABLE_DUPLICATE(add);
 
-/* Normal entry point — never ifdef’d */
 int main(void) {
     printf("add(2,3) = %d\n", add(2, 3));
     return 0;
 }
 
-/* Mock only replaces add() when CDK_MOCK_ENABLE is defined */
+/* Mock only enabled when CDK_MOCK_ENABLE is defined */
 #ifdef CDK_MOCK_ENABLE
 int add(int a, int b) {
     printf("Mocked add called!\n");
-    return add_orig(a, b) + 100; // call original, then modify
+    return add_orig(a, b) + 100;
 }
 #endif
 ```
 
-For productioon build do:
-```
+### Run without mocks (production build)
+
+```sh
 gcc main.c -o demo
 ./demo
+# Output: add(2,3) = 5
 ```
 
-Output:
-```
-add(2,3) = 5
-```
+### Run with mocks (test build)
 
-For tests build do:
-```
+```sh
 gcc -DCDK_MOCK_ENABLE main.c -o demo_test
 ./demo_test
+# Output:
+# Mocked add called!
+# add(2,3) = 105
 ```
 
-Output:
-```
-Mocked add called!
-add(2,3) = 105
-```
+Full working examples are in the `examples/` directory, with **CMake**, **Meson**, and plain compiler builds.
 
-## How it works?
+---
 
-The approach to mocking presented by the library is based on `wrap` attribute presnted by `ld` (GCC) and `lld` (CLANG). More info can be found here https://linux.die.net/man/1/ld, as `lld` is drop-in replacement for `ld` we can assume they have the same features.
+## How It Works
 
-Simple example shoing how wrapping works is here:
-```c
-#include <stdio.h>
-#include <stdlib.h>
+CDK Mock is built on two well-established compiler features:
 
-void *__real_malloc(size_t);
-void *__wrap_malloc(size_t size) {
-  printf("malloc called with size %zu\n", size);
-  return __real_malloc(size); // Call the real malloc
-}
+1. **Linker wrapping (`--wrap`)**
+   Replace any function call with a wrapper, while still having access to the real function:
 
-int main(void) {
-  char *p = malloc(10); // Will be redirected to __wrap_malloc
-  if (p) {
-    printf("Allocated successfully!\n");
-    free(p);
-  }
-  return 0;
-}
-```
+   ```c
+   void *__real_malloc(size_t);
+   void *__wrap_malloc(size_t size) {
+       printf("malloc called with %zu\n", size);
+       return __real_malloc(size);
+   }
+   ```
 
-To compile and run example use:
-```bash
-clang main.c -Wl,--wrap=malloc -o wrapdemo
-./wrapdemo
-```
+   Compile with:
 
-As you can see wrapping allow for mocking any function from other translation unit, in other woprds wrapping work as long as function to mock is in other `.so` than your code.
+   ```sh
+   clang main.c -Wl,--wrap=malloc -o wrapdemo
+   ```
 
-If you need to mock function in the same translation unit you need more fancy machineary, `weak` attribute:
-```
-#include <stdio.h>
+2. **Weak symbols**
+   Mark a function as `__attribute__((weak))` to let a mock override it at link time:
 
-/* ---- Production code ---- */
-/* Mark the function as weak, so it can be overridden */
-__attribute__((weak))
-int my_func(void) {
-    return 42;   /* Default implementation */
-}
+   ```c
+   __attribute__((weak))
+   int my_func(void) { return 42; }
 
-void do_work(void) {
-    printf("my_func() returned %d\n", my_func());
-}
+   int my_func(void) { return -1; } // mock replaces weak symbol
+   ```
 
-int main(void) {
-    do_work();  /* Will call the mock */
-    return 0;
-}
+CDK Mock wraps these techniques in a **clean API** so you don’t need to deal with compiler/linker quirks directly.
 
-/* ---- Mock for testing ---- */
-int my_func(void) {
-    return -1;   /* Mocked version */
-}
-```
-
-To compile and run example use:
-```bash
-clang main.c -o weakdemo
-./weakdemo
-```
-
-These two mocking aproaches are core of this CDK Mock library.
+---
 
 ## FAQ
 
 **What is CDK: Mock?**
-A small library for function mocking in C — useful for testing code that depends on system calls, external APIs, or other complex functions.
+A tiny C library that makes mocking functions simple and consistent.
 
 **Why use it?**
-Because writing mocks by hand is repetitive and error-prone. This library makes mocking straightforward, with a clean API and no external dependencies.
+Because hand-rolled mocks are repetitive and error-prone. CDK Mock abstracts the boilerplate and works across toolchains.
 
-**What license is used?**
-MIT license — free for both open-source and commercial projects.
+**License?**
+MIT — free for both open-source and commercial projects.
 
 **Who is it for?**
 
 * Developers writing unit tests in plain C
 * Embedded/Linux engineers needing lightweight testing utilities
-* Teams wanting to test without pulling in heavy frameworks
-
+* Teams that want mocks without dragging in heavy frameworks
