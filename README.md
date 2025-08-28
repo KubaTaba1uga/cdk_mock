@@ -60,6 +60,28 @@ Full working examples are in the `examples/` directory, with **CMake**, **Meson*
 
 ---
 
+## API usage decision tree
+
+Here is a diagram showing when to use `MOCKABLE_*` macros vs. `--wrap`:
+
+```mermaid
+flowchart TD
+  A["Need to mock a function"] --> B{"Is the function in the same .c file?"}
+  B -- Yes --> C["Use MOCKABLE macro"]
+  B -- No  --> D["Use linker --wrap"]
+
+  C --> C1{"Is it static?"}
+  C1 -- Yes --> C2["CDKM_MOCKABLE_STATIC(fn)"]
+  C1 -- No  --> C3["CDKM_MOCKABLE(fn)"]
+
+  C2 --> C4{"Need original in mock?"}
+  C3 --> C4
+  C4 -- Yes --> C5["CDKM_MOCKABLE_DUPLICATE(fn)"]
+  C4 -- No  --> C6["Do nothing"]
+```
+
+---
+
 ## How It Works
 
 CDK Mock is built on two well-established compiler features:
