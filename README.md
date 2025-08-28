@@ -9,7 +9,57 @@
 
 ## How to use?
 
+Usage example is in `examples` directory, at least one example is prepared for each cmake, meson and compiler only.
+Here is simple example showing how to use on of mockable macros:
+```
+#include <stdio.h>
+#include "cdk_mock.h"
 
+/* Production function, marked as mockable */
+CDKM_MOCKABLE(int add(int a, int b)) {
+    return a + b;   // default implementation
+}
+
+/* Expose original symbol so mock can call it if needed */
+CDKM_MOCKABLE_DUPLICATE(add);
+
+/* Normal entry point — never ifdef’d */
+int main(void) {
+    printf("add(2,3) = %d\n", add(2, 3));
+    return 0;
+}
+
+/* Mock only replaces add() when CDK_MOCK_ENABLE is defined */
+#ifdef CDK_MOCK_ENABLE
+int add(int a, int b) {
+    printf("Mocked add called!\n");
+    return add_orig(a, b) + 100; // call original, then modify
+}
+#endif
+```
+
+For productioon build do:
+```
+gcc main.c -o demo
+./demo
+```
+
+Output:
+```
+add(2,3) = 5
+```
+
+For tests build do:
+```
+gcc -DCDK_MOCK_ENABLE main.c -o demo_test
+./demo_test
+```
+
+Output:
+```
+Mocked add called!
+add(2,3) = 105
+```
 
 ## How it works?
 
