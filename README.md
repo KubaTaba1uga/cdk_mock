@@ -1,38 +1,97 @@
-# c_minilib_mock
+# C Development Kit: Mock
 
-**`c_minilib_mock`** is a lightweight C mocking library designed for function substitution during testing. It leverages GCC/Clang features like **weak symbols** and **linker wrappers**, enabling flexible mocking with minimal effort.
+## Introduction
 
-## ✨ Features
 
-- **Function Mocking**: Replace real implementations with test-specific versions.
-- **Weak & Wrapper-Based**: Supports both `__attribute__((weak))` and `--wrap` techniques.
-- **Minimal Interface**: Use simple macros like `MOCKABLE()` and `MOCKABLE_DUPLICATE()`.
-- **Multi-Build Support**: Works with both **CMake** and **Meson**.
-- **Practical Examples**: Comes with usage examples.
+**C Development Kit (CDK)** is a set of lightweight, MIT-licensed libraries that make C development on Linux simpler and more consistent. Each package focuses on a specific problem area.
 
-## 🧠 Example Usage
+**C Development Kit (CDK): Mock** provides a simple and flexible way to **mock any function in your C project**, making it easier to write unit tests without rewriting or overcomplicating code. It’s designed to be minimal, portable, and integrate smoothly with GCC and CLANG.
 
-Check the usage examples in the respective subdirectories of `examples/`:
-- CMake Examples: `examples/cmake/`
-- Meson Examples: `examples/meson/`
-- Mockable Macro Examples: `examples/mockable_macro/`
+## How to use?
 
-Each example demonstrates how to use the provided macros and integration scripts.
 
-## 🧰 Development Tools
 
-- **CMake Function**: `add_mocked_test()` simplifies test definition and linker wrapping.
-- **Meson Script**: `wrap_flags_gen.py` generates required `-Wl,--wrap=` flags automatically.
-- **Portable Macros**:
-  - `MOCKABLE()`: Enables weak substitution.
-  - `MOCKABLE_STATIC()`: Makes static functions mockable.
-  - `MOCKABLE_DUPLICATE()`: Allows access to original function as `<name>_orig`.
+## How it works?
 
-## 📚 Diagram
+The approach to mocking presented by the library is based on `wrap` attribute presnted by `ld` (GCC) and `lld` (CLANG). More info can be found here https://linux.die.net/man/1/ld, as `lld` is drop-in replacement for `ld` we can assume they have the same features.
 
-A visual explanation of when to use **wrapper** vs **weak** method is available at:  
-`docs/c-minilib-mock-architecture.drawio`
+Simple example shoing how wrapping works is here:
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
-## 📄 License
+void *__real_malloc(size_t);
+void *__wrap_malloc(size_t size) {
+  printf("malloc called with size %zu\n", size);
+  return __real_malloc(size); // Call the real malloc
+}
 
-MIT License. See [LICENSE](LICENSE) for full text.
+int main(void) {
+  char *p = malloc(10); // Will be redirected to __wrap_malloc
+  if (p) {
+    printf("Allocated successfully!\n");
+    free(p);
+  }
+  return 0;
+}
+```
+
+To compile and run example use:
+```bash
+clang main.c -Wl,--wrap=malloc -o wrapdemo
+./wrapdemo
+```
+
+As you can see wrapping allow for mocking any function from other translation unit, in other woprds wrapping work as long as function to mock is in other `.so` than your code.
+
+If you need to mock function in the same translation unit you need more fancy machineary, `weak` attribute:
+```
+#include <stdio.h>
+
+/* ---- Production code ---- */
+/* Mark the function as weak, so it can be overridden */
+__attribute__((weak))
+int my_func(void) {
+    return 42;   /* Default implementation */
+}
+
+void do_work(void) {
+    printf("my_func() returned %d\n", my_func());
+}
+
+int main(void) {
+    do_work();  /* Will call the mock */
+    return 0;
+}
+
+/* ---- Mock for testing ---- */
+int my_func(void) {
+    return -1;   /* Mocked version */
+}
+```
+
+To compile and run example use:
+```bash
+clang main.c -o weakdemo
+./weakdemo
+```
+
+These two mocking aproaches are core of this CDK Mock library.
+
+## FAQ
+
+**What is CDK: Mock?**
+A small library for function mocking in C — useful for testing code that depends on system calls, external APIs, or other complex functions.
+
+**Why use it?**
+Because writing mocks by hand is repetitive and error-prone. This library makes mocking straightforward, with a clean API and no external dependencies.
+
+**What license is used?**
+MIT license — free for both open-source and commercial projects.
+
+**Who is it for?**
+
+* Developers writing unit tests in plain C
+* Embedded/Linux engineers needing lightweight testing utilities
+* Teams wanting to test without pulling in heavy frameworks
+
