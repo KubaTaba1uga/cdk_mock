@@ -1,38 +1,113 @@
-# c_minilib_mock
+# C Development Kit: Mock
 
-**`c_minilib_mock`** is a lightweight C mocking library designed for function substitution during testing. It leverages GCC/Clang features like **weak symbols** and **linker wrappers**, enabling flexible mocking with minimal effort.
+## Introduction
 
-## ✨ Features
+The **C Development Kit (CDK)** is a collection of lightweight, MIT-licensed libraries to make C development on Linux simpler and more consistent.
 
-- **Function Mocking**: Replace real implementations with test-specific versions.
-- **Weak & Wrapper-Based**: Supports both `__attribute__((weak))` and `--wrap` techniques.
-- **Minimal Interface**: Use simple macros like `MOCKABLE()` and `MOCKABLE_DUPLICATE()`.
-- **Multi-Build Support**: Works with both **CMake** and **Meson**.
-- **Practical Examples**: Comes with usage examples.
+**CDK: Mock** is the mocking component. It provides a minimal, portable way to **mock any function in your C project**, so you can write meaningful tests without rewriting or overcomplicating code. Works with both **GCC** and **Clang**.
 
-## 🧠 Example Usage
+---
 
-Check the usage examples in the respective subdirectories of `examples/`:
-- CMake Examples: `examples/cmake/`
-- Meson Examples: `examples/meson/`
-- Mockable Macro Examples: `examples/mockable_macro/`
+## Quick Start
 
-Each example demonstrates how to use the provided macros and integration scripts.
+### Example: Marking a function as mockable
 
-## 🧰 Development Tools
+```c
+#include <stdio.h>
+#include "cdk_mock.h"
 
-- **CMake Function**: `add_mocked_test()` simplifies test definition and linker wrapping.
-- **Meson Script**: `wrap_flags_gen.py` generates required `-Wl,--wrap=` flags automatically.
-- **Portable Macros**:
-  - `MOCKABLE()`: Enables weak substitution.
-  - `MOCKABLE_STATIC()`: Makes static functions mockable.
-  - `MOCKABLE_DUPLICATE()`: Allows access to original function as `<name>_orig`.
+/* Production function, marked as mockable */
+CDKM_MOCKABLE(int add(int a, int b)) {
+    return a + b;   // default implementation
+}
 
-## 📚 Diagram
+/* Expose original symbol for mocks to call */
+CDKM_MOCKABLE_DUPLICATE(add);
 
-A visual explanation of when to use **wrapper** vs **weak** method is available at:  
-`docs/c-minilib-mock-architecture.drawio`
+int main(void) {
+    printf("add(2,3) = %d\n", add(2, 3));
+    return 0;
+}
 
-## 📄 License
+/* Mock only enabled when CDK_MOCK_ENABLE is defined */
+#ifdef CDK_MOCK_ENABLE
+int add(int a, int b) {
+    printf("Mocked add called!\n");
+    return add_orig(a, b) + 100;
+}
+#endif
+```
 
-MIT License. See [LICENSE](LICENSE) for full text.
+### Run without mocks (production build)
+
+```sh
+gcc main.c -o demo
+./demo
+# Output: add(2,3) = 5
+```
+
+### Run with mocks (test build)
+
+```sh
+gcc -DCDK_MOCK_ENABLE main.c -o demo_test
+./demo_test
+# Output:
+# Mocked add called!
+# add(2,3) = 105
+```
+
+Full working examples are in the `examples/` directory, with **CMake**, **Meson**, and plain compiler builds.
+
+---
+
+## How It Works
+
+CDK Mock is built on two well-established compiler features:
+
+1. **Linker wrapping (`--wrap`)**
+   Replace any function call with a wrapper, while still having access to the real function:
+
+   ```c
+   void *__real_malloc(size_t);
+   void *__wrap_malloc(size_t size) {
+       printf("malloc called with %zu\n", size);
+       return __real_malloc(size);
+   }
+   ```
+
+   Compile with:
+
+   ```sh
+   clang main.c -Wl,--wrap=malloc -o wrapdemo
+   ```
+
+2. **Weak symbols**
+   Mark a function as `__attribute__((weak))` to let a mock override it at link time:
+
+   ```c
+   __attribute__((weak))
+   int my_func(void) { return 42; }
+
+   int my_func(void) { return -1; } // mock replaces weak symbol
+   ```
+
+CDK Mock wraps these techniques in a **clean API** so you don’t need to deal with compiler/linker quirks directly.
+
+---
+
+## FAQ
+
+**What is CDK: Mock?**
+A tiny C library that makes mocking functions simple and consistent.
+
+**Why use it?**
+Because hand-rolled mocks are repetitive and error-prone. CDK Mock abstracts the boilerplate and works across toolchains.
+
+**License?**
+MIT — free for both open-source and commercial projects.
+
+**Who is it for?**
+
+* Developers writing unit tests in plain C
+* Embedded/Linux engineers needing lightweight testing utilities
+* Teams that want mocks without dragging in heavy frameworks

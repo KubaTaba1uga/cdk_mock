@@ -17,7 +17,7 @@ for src in "${sources[@]}"; do
   release_out="$SCRIPT_DIR/$base"
 
   # Debug build
-  gcc -I../../include -DENABLE_MOCKS "$src_path" "$test_src_path" -o "$debug_out"
+  gcc -I../../include -DCDK_MOCK_ENABLE "$src_path" "$test_src_path" -o "$debug_out"
 
   # Normal build
   gcc -I../../include "$src_path" -o "$release_out"

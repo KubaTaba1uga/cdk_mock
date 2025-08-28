@@ -1,13 +1,12 @@
 #include <stdio.h>
 
+#include "cdk_mock.h"
 #include "lib.h"
 
-#include <c_minilib_mock.h>
+CDKM_MOCKABLE(int bar(void)) { return 888; }
+CDKM_MOCKABLE_DUPLICATE(bar);
 
-MOCKABLE(int bar(void)) { return 888; }
-MOCKABLE_DUPLICATE(bar);
-
-#ifdef ENABLE_MOCKS
+#ifdef CDK_MOCK_ENABLE
 int _main(void) {
 #else
 int main(void) {
