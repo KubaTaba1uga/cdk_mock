@@ -26,7 +26,7 @@ add_executable(example_1_test test_main.c main.c lib.c)
 target_link_libraries(example_1_test PRIVATE cdk_mock)
 
 # Include is required if you want to use `add_mocked_test` function.
-include("${cdk_mock_SOURCE_DIR}/cmake/setup.cmake")
+include("${CDK_MOCK_SOURCE_DIR}/cmake/setup.cmake")
 add_mocked_test(
     NAME example_1_test
     COMMAND example_1_test

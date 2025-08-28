@@ -47,11 +47,11 @@ function(add_mocked_test)
         target_link_options(${MOCK_ARGS_NAME} PRIVATE ${WRAP_FLAGS})
     endif()
     
-    if(NOT DEFINED C_MINILIB_MOCK_SOURCE_DIR)
-      message(FATAL_ERROR "C_MINILIB_MOCK_SOURCE_DIR not set. Ensure c_minilib_mock was properly included.")
+    if(NOT DEFINED CDK_MOCK_SOURCE_DIR)
+      message(FATAL_ERROR "CDK_MOCK_SOURCE_DIR not set. Ensure cdk_mock was properly included.")
     endif()
 
-    set(MOCK_INCLUDE_DIR "${C_MINILIB_MOCK_SOURCE_DIR}/include")
+    set(MOCK_INCLUDE_DIR "${CDK_MOCK_SOURCE_DIR}/include")
 
     target_include_directories(${MOCK_ARGS_NAME} PRIVATE ${MOCK_INCLUDE_DIR})
 
