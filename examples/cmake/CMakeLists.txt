@@ -22,7 +22,7 @@ target_link_libraries(example_1 PRIVATE cdk_mock)
 # Remember to split mocked functions from main. If you put mocked function
 #  in the same translation unit, then linker cannot do anything, and wrapping
 #  doesn't work.
-add_executable(example_1_test test_main.c main.c lib.c)
+add_executable(example_1_test mock_lib.c main.c lib.c)
 target_link_libraries(example_1_test PRIVATE cdk_mock)
 
 # Include is required if you want to use `add_mocked_test` function.

@@ -12,7 +12,7 @@ exe = executable('example_1', ['main.c', 'lib.c'],
   dependencies: [cdk_mock_dep],
 )
 
-test = executable('test_example_1', ['main.c', 'test_main.c', 'lib.c'],
+test = executable('example_1_test', ['main.c', 'mock_lib.c', 'lib.c'],
   dependencies: [cdk_mock_dep],
   c_args: ['-DCDK_MOCK_ENABLE'],  
   link_args: run_command(mock_flags_gen_script, ['foo'], check: true).stdout().strip().split(' ')
