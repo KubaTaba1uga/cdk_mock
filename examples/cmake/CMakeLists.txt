@@ -9,7 +9,7 @@ include(FetchContent)
 FetchContent_Declare(
   cdk_mock
   GIT_REPOSITORY https://github.com/KubaTaba1uga/cdk_mock.git
-  GIT_TAG rename_library
+  GIT_TAG apply_small_improvements
 )
 
 FetchContent_MakeAvailable(cdk_mock)

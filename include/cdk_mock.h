@@ -30,7 +30,7 @@
  */
 #ifdef CDK_MOCK_ENABLE
 #define CDKM_MOCKABLE_DUPLICATE(function_name)                                 \
-  __typeof__(function_name) function_name##_orig                               \
+  __typeof__(function_name) __real_##function_name                             \
       __attribute__((weak, alias(#function_name)))
 #else
 #define CDKM_MOCKABLE_DUPLICATE(function_name)
