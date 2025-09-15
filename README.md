@@ -32,7 +32,7 @@ int main(void) {
 ```
 
 and file `mock.c`:
-```
+```c
 /* Mock only enabled when CDK_MOCK_ENABLE is defined */
 #ifdef CDK_MOCK_ENABLE
 #include "stdio.h"
