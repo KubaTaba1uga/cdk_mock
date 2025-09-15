@@ -1,6 +1,6 @@
-project('c_minilib_mock', 'c')
+project('cdk_mock', 'c')
 
-c_minilib_mock_dep = declare_dependency(
+cdk_mock_dep = declare_dependency(
   include_directories: include_directories('include'),
 )
 
