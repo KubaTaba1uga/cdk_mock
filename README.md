@@ -1,6 +1,5 @@
 # C Development Kit: Mock
 
-
 ## Introduction
 
 The **C Development Kit (CDK)** is a collection of lightweight, MIT-licensed libraries to make C development on Linux simpler and more consistent.
@@ -13,6 +12,7 @@ The **C Development Kit (CDK)** is a collection of lightweight, MIT-licensed lib
 
 ### Example: Marking a function as mockable
 
+Create file `main.c`:
 ```c
 #include <stdio.h>
 #include "cdk_mock.h"
@@ -29,12 +29,18 @@ int main(void) {
     printf("add(2,3) = %d\n", add(2, 3));
     return 0;
 }
+```
 
+and file `mock.c`:
+```
 /* Mock only enabled when CDK_MOCK_ENABLE is defined */
 #ifdef CDK_MOCK_ENABLE
+#include "stdio.h"
+
+int __real_add(int a, int b);
 int add(int a, int b) {
-    printf("Mocked add called!\n");
-    return add_orig(a, b) + 100;
+  printf("Mocked add called!\n");
+  return __real_add(a, b) + 100;
 }
 #endif
 ```
@@ -42,7 +48,7 @@ int add(int a, int b) {
 ### Run without mocks (production build)
 
 ```sh
-gcc main.c -o demo
+gcc main.c mock.c -o demo
 ./demo
 # Output: add(2,3) = 5
 ```
@@ -50,7 +56,7 @@ gcc main.c -o demo
 ### Run with mocks (test build)
 
 ```sh
-gcc -DCDK_MOCK_ENABLE main.c -o demo_test
+gcc -DCDK_MOCK_ENABLE main.c mock.c -o demo_test
 ./demo_test
 # Output:
 # Mocked add called!
